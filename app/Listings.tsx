@@ -36,7 +36,11 @@ function Listings({ initList }: any) {
         dataLength={data.length}
         next={loadMoreData}
         hasMore
-        loader={<h4></h4>}
+        loader={
+          <h4 className="text-center my-5 text-lime-500 font-bold">
+            Loading More...
+          </h4>
+        }
       >
         <div className="mt-5 grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 gap-5 gap-y-10">
           {data.map((el: any) => {
