@@ -37,9 +37,12 @@ function Listings({ initList }: any) {
         next={loadMoreData}
         hasMore
         loader={
-          <h4 className="text-center my-5 text-lime-500 font-bold">
-            Loading More...
-          </h4>
+          <div className="w-full mt-8 mb-4 flex justify-center">
+            <div className="ldsripple">
+              <div></div>
+              <div></div>
+            </div>
+          </div>
         }
       >
         <div className="mt-5 grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 gap-5 gap-y-10">

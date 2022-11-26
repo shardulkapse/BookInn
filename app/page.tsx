@@ -64,19 +64,29 @@ function page() {
           navColor ? "bg-black py-0 shadow-card" : "bg-transparent py-5"
         }`}
       >
-        <Slide direction="down">
-          <Header
-            setIsOpen={setIsOpen}
-            userLoggedIn={userLoggedIn}
-            setUserLoggedIn={setUserLoggedIn}
-          />
-        </Slide>
+        {listData && (
+          <Slide direction="down">
+            <Header
+              setIsOpen={setIsOpen}
+              userLoggedIn={userLoggedIn}
+              setUserLoggedIn={setUserLoggedIn}
+            />
+          </Slide>
+        )}
       </div>
       <AuthModal isOpen={isOpen} setIsOpen={setIsOpen} notify={notify} />
       {listData && (
         <Fade>
           <Listings initList={listData} />
         </Fade>
+      )}
+      {!listData && (
+        <div className="w-full h-screen flex justify-center items-center">
+          <div className="ldsripple">
+            <div></div>
+            <div></div>
+          </div>
+        </div>
       )}
       <ToastContainer
         position="top-center"
