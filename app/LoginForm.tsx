@@ -18,7 +18,7 @@ function LoginForm({ setActiveForm, setIsOpen, notify }: any) {
         loginUser(userInput: {email:"${data.email}" password:"${data.password}"}) {_id name email},
        }`,
     };
-    const res = await fetch("http://localhost:8080/graphql", {
+    const res = await fetch("https://bookinn-node.onrender.com/graphql", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

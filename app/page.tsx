@@ -35,7 +35,7 @@ function page() {
           getList(page: ${1}) {_id name images address ratings price},
          }`,
       };
-      const res = await fetch("http://localhost:8080/graphql", {
+      const res = await fetch("https://bookinn-node.onrender.com/graphql", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
