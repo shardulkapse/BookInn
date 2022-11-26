@@ -1,9 +1,10 @@
-import React, { useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { signInValidationSchema } from "../utils/yupValidations";
 
 function SignInForm({ setActiveForm, setIsOpen, notify }: any) {
+  const [locked, setLocked] = useState(false);
   const {
     register,
     handleSubmit,
@@ -13,6 +14,7 @@ function SignInForm({ setActiveForm, setIsOpen, notify }: any) {
   });
 
   const formSubmitHandler = async (data: any) => {
+    setLocked(true);
     const gqlQuery = {
       query: `mutation {
       signInUser(userInput: {email:"${data.email}" password:"${data.password}" name:"${data.name}"}) {_id name email},
@@ -35,6 +37,7 @@ function SignInForm({ setActiveForm, setIsOpen, notify }: any) {
       notify("Successfully Signed In", 1);
     } else {
       notify(resData.errors[0].message.split(": ")[1], 2);
+      setLocked(false);
     }
   };
 
@@ -80,10 +83,15 @@ function SignInForm({ setActiveForm, setIsOpen, notify }: any) {
         )}
 
         <button
+          disabled={locked}
           type="submit"
           className="px-6 py-2 mt-5 bg-slate-800 rounded-full tracking-wider hover:text-lime-500 duration-500 ease-in-out hover:bg-slate-900 cursor-pointer"
         >
-          Sign In
+          {locked ? (
+            <div className="w-5 h-5 mx-2 border-2 border-t border-t-white border-lime-500 animate-spin rounded-full" />
+          ) : (
+            <span>Sign In</span>
+          )}
         </button>
       </form>
       <p className="text-center mt-5">

@@ -15,6 +15,7 @@
     "react-awesome-reveal": "^4.1.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.39.4",
+    "react-icons": "^4.6.0",
     "react-infinite-scroll-component": "^6.1.0",
     "react-toastify": "^9.1.1",
     "yup": "^0.32.11"

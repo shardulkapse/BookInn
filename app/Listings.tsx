@@ -2,6 +2,7 @@
 import Image from "next/image";
 import React, { useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
+import ListingCard from "./ListingCard";
 
 function Listings({ initList }: any) {
   const [data, setData] = useState(initList.data.getList);
@@ -27,7 +28,7 @@ function Listings({ initList }: any) {
     setData([...data, ...resData.data.getList]);
   };
 
-  console.log(data[0]);
+  console.log(data[3]);
 
   return (
     <div className="px-20">
@@ -37,26 +38,9 @@ function Listings({ initList }: any) {
         hasMore
         loader={<h4></h4>}
       >
-        <div className="mt-5 grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 gap-5 gap-y-6">
+        <div className="mt-5 grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 gap-5 gap-y-10">
           {data.map((el: any) => {
-            return (
-              <div
-                key={el._id}
-                className="p-2 max-w-md lg:max-w-4xl text-sm cursor-pointer"
-              >
-                <img
-                  src={el.images}
-                  alt=""
-                  className="w-full h-80 object-cover rounded-2xl"
-                />
-                <p className="text-black mt-3">{el?.name}</p>
-                <p className="text-black font-bold mt-2">{el?.address}</p>
-                <p className="font-bold text-black mt-2">
-                  ${Number(el?.price).toFixed(0)}
-                  <span className="font-normal text-xs"> night</span>
-                </p>
-              </div>
-            );
+            return <ListingCard el={el} key={el._id} />;
           })}
         </div>
       </InfiniteScroll>

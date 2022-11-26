@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { loginValidationSchema } from "../utils/yupValidations";
 
 function LoginForm({ setActiveForm, setIsOpen, notify }: any) {
+  const [locked, setLocked] = useState(false);
   const {
     register,
     handleSubmit,
@@ -13,6 +14,7 @@ function LoginForm({ setActiveForm, setIsOpen, notify }: any) {
   });
 
   const formSubmitHandler = async (data: any) => {
+    setLocked(true);
     const gqlQuery = {
       query: `{
         loginUser(userInput: {email:"${data.email}" password:"${data.password}"}) {_id name email},
@@ -34,6 +36,7 @@ function LoginForm({ setActiveForm, setIsOpen, notify }: any) {
       notify("Login Successful", 1);
     } else {
       notify(resData.errors[0].message.split(": ")[1], 2);
+      setLocked(false);
     }
   };
 
@@ -68,10 +71,15 @@ function LoginForm({ setActiveForm, setIsOpen, notify }: any) {
         )}
 
         <button
+          disabled={locked}
           type="submit"
           className="px-6 py-2 mt-5 bg-slate-800 rounded-full tracking-wider hover:text-lime-500 duration-500 ease-in-out hover:bg-slate-900 cursor-pointer"
         >
-          login
+          {locked ? (
+            <div className="w-5 h-5 mx-2 border-2 border-t border-t-white border-lime-500 animate-spin rounded-full" />
+          ) : (
+            <span>login</span>
+          )}
         </button>
       </form>
       <p className="text-center mt-5">
