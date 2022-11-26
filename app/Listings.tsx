@@ -33,7 +33,7 @@ function Listings({ initList }: any) {
   return (
     <div className="px-20">
       <InfiniteScroll
-        dataLength={data.length}
+        dataLength={data.length - 4}
         next={loadMoreData}
         hasMore
         loader={
