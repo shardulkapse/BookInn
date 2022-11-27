@@ -13,7 +13,7 @@ function Header({ hideBtn, setIsOpen, userLoggedIn, setUserLoggedIn }: any) {
       {!hideBtn && !userLoggedIn && (
         <span
           onClick={() => setIsOpen(true)}
-          className="px-3 py-2 text-sm lg:text-base lg:px-6 lg:py-3 bg-slate-800 rounded-full tracking-wider hover:text-lime-500 duration-500 ease-in-out hover:bg-slate-900 cursor-pointer"
+          className="px-3 py-2 text-sm lg:px-6 lg:py-3 bg-slate-800 rounded-full tracking-wider hover:text-lime-500 duration-500 ease-in-out hover:bg-slate-900 cursor-pointer"
         >
           Login / Sign in
         </span>
@@ -63,7 +63,8 @@ function Header({ hideBtn, setIsOpen, userLoggedIn, setUserLoggedIn }: any) {
                   <div className="">
                     <Menu.Item>
                       {({ active }) => (
-                        <button
+                        <Link
+                          href="/user"
                           className={`${
                             active ? "bg-slate-900 text-lime-500" : "text-white"
                           } group bg-slate-800 duration-500 ease-in-out flex w-full items-center rounded-md px-2 py-2 text-sm`}
@@ -83,7 +84,7 @@ function Header({ hideBtn, setIsOpen, userLoggedIn, setUserLoggedIn }: any) {
                             />
                           </svg>
                           My profile
-                        </button>
+                        </Link>
                       )}
                     </Menu.Item>
                     <Menu.Item>

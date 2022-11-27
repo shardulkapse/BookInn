@@ -6,12 +6,44 @@ import AuthModal from "./AuthModal";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Listings from "./Listings";
+import SearchBar from "./SearchBar";
+import SearchListings from "./SearchListings";
 
 function page() {
   const [isOpen, setIsOpen] = useState(false);
   const [userLoggedIn, setUserLoggedIn] = useState(false);
   const [listData, setListData] = useState();
   const [navColor, setnavColor] = useState(false);
+  const [searched, setSearched] = useState<any>(null);
+  const [searchData, setSearchData] = useState<any>();
+  const [loading, setLoading] = useState(true);
+
+  const handleSearch = async (query: string) => {
+    setLoading(true);
+    setSearchData(null);
+    setSearched(null);
+    const gqlQuery = {
+      query: `{
+        searchList(query:"${query}" page: ${1}) {_id name images address ratings price},
+       }`,
+    };
+    const res = await fetch("https://bookinn-node.onrender.com/graphql", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(gqlQuery),
+    });
+    const resData = await res.json();
+    setSearchData(resData.data.searchList);
+    setSearched(query);
+    setLoading(false);
+  };
+
+  const handleNullQuery = () => {
+    setSearchData(null);
+    setSearched(null);
+  };
 
   useEffect(() => {
     const id = window.localStorage.getItem("_id");
@@ -44,6 +76,7 @@ function page() {
       });
       const resData = await res.json();
       setListData(resData);
+      setLoading(false);
     })();
   }, []);
 
@@ -76,11 +109,31 @@ function page() {
       </div>
       <AuthModal isOpen={isOpen} setIsOpen={setIsOpen} notify={notify} />
       {listData && (
-        <Fade>
+        <Fade delay={300} triggerOnce>
+          <SearchBar
+            handleSearch={handleSearch}
+            handleNullQuery={handleNullQuery}
+          />
+        </Fade>
+      )}
+      {listData && !searched && !searchData && !loading && (
+        <Fade delay={500} triggerOnce>
           <Listings initList={listData} />
         </Fade>
       )}
-      {!listData && (
+      {searched && searchData && !loading && (
+        <Fade delay={500}>
+          <SearchListings initList={searchData} query={searched} />
+        </Fade>
+      )}
+      {loading && !searched && listData && (
+        <div className="w-full mt-40 text-center">
+          <h1 className="text-black font-bold tracking-wider text-2xl">
+            Loading...
+          </h1>
+        </div>
+      )}
+      {!listData && loading && (
         <div className="w-full h-screen flex justify-center items-center">
           <div className="ldsripple">
             <div></div>

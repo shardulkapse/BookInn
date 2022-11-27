@@ -1,5 +1,4 @@
 "use client";
-import Image from "next/image";
 import React, { useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import ListingCard from "./ListingCard";
@@ -27,8 +26,6 @@ function Listings({ initList }: any) {
     setCurrPage(currPage + 1);
     setData([...data, ...resData.data.getList]);
   };
-
-  console.log(data[3]);
 
   return (
     <div className="px-20">
